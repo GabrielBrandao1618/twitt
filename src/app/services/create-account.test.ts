@@ -11,7 +11,7 @@ describe('Create account', () => {
   });
 
   it('Should be able to create an account', async () => {
-    expect(
+    await expect(
       createAccount.do({
         bio: 'Some bio',
         name: 'John Doe',
@@ -19,5 +19,6 @@ describe('Create account', () => {
         password: 'password123',
       }),
     ).resolves.not.toThrow();
+    expect(usersRepository.users).toHaveLength(1);
   });
 });
