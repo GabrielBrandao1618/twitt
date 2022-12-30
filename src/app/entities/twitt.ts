@@ -13,6 +13,9 @@ export class Twitt extends Entity<ITwittProps> {
     props: Replace<ITwittProps, { createdAt?: Date; updatedAt?: Date }>,
     id?: string,
   ) {
+    if (props.content.length > 255) {
+      throw new Error('Twitt content should not be greater than 255');
+    }
     super(
       {
         ...props,
