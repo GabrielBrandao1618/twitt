@@ -3,7 +3,7 @@ import { Entity } from './entity';
 
 interface ITwittProps {
   content: string;
-  userId: string;
+  authorId: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -31,8 +31,8 @@ export class Twitt extends Entity<ITwittProps> {
     this._props.updatedAt = new Date();
   }
 
-  get userId() {
-    return this._props.userId;
+  get authorId() {
+    return this._props.authorId;
   }
   get createdAt() {
     return this._props.createdAt;
