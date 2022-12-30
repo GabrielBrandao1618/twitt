@@ -11,6 +11,18 @@ interface IUserProps {
 
 export class User extends Entity<IUserProps> {
   constructor(props: Replace<IUserProps, { createdAt?: Date }>, id?: string) {
+    if (props.bio.length > 255) {
+      throw new Error('Bio cannot be greater than 255 characters');
+    }
+    if (props.name.length > 50) {
+      throw new Error('Name should not be greater than 50 characters');
+    }
+    if (props.user.length > 20) {
+      throw new Error('User should not be greater than 20 characters');
+    }
+    if (props.user.includes(' ')) {
+      throw new Error('User should not contain spaces');
+    }
     super(
       {
         ...props,
