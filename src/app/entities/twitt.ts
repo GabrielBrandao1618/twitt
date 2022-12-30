@@ -23,6 +23,10 @@ export class Twitt extends Entity<ITwittProps> {
     );
   }
 
+  get id() {
+    return this._id;
+  }
+
   get content() {
     return this._props.content;
   }
