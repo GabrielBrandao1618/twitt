@@ -1,3 +1,5 @@
+import { hash } from 'bcrypt';
+
 import { User } from '@app/entities/user';
 import { UsersRepository } from '@app/repositories/users-repository';
 
@@ -14,11 +16,12 @@ interface Response {
 export class CreateAccount {
   constructor(private readonly usersRepository: UsersRepository) {}
   async do({ bio, name, user, password }: Request): Promise<Response> {
+    const encryptedPassword = await hash(password, 12);
     const createUser = new User({
       bio,
       user,
       name,
-      password,
+      password: encryptedPassword,
     });
     await this.usersRepository.create(createUser);
     return {
