@@ -8,10 +8,11 @@ import { UserController } from './controllers/user.controller';
 import { TwittController } from './controllers/twitt.controller';
 import { CreateTwitt } from '@app/services/create-twitt';
 import { JwtStrategy } from '@infra/auth/passport/jwt/jwt-strategy';
+import { EditTwitt } from '@app/services/edit-twitt';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [AppController, UserController, TwittController],
-  providers: [CreateAccount, CreateTwitt, JwtStrategy],
+  providers: [CreateAccount, CreateTwitt, JwtStrategy, EditTwitt],
 })
 export class HttpModule {}
