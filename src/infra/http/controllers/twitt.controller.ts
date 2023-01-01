@@ -10,7 +10,18 @@ export class TwittController {
   constructor(private readonly createTwitt: CreateTwitt) {}
   @UseGuards(JwtGuard)
   @Post()
-  async handleCreateTwitt(@Request() req) {
-    console.log(req.body);
+  async handleCreateTwitt(@Request() req: CreateTwittDTO) {
+    const { id: actorId } = req.user;
+    const { createdTwitt } = await this.createTwitt.do({
+      content: req.body.content,
+      actorId: actorId,
+    });
+    return {
+      content: createdTwitt.content,
+      createdAt: createdTwitt.createdAt,
+      updatedAt: createdTwitt.updatedAt,
+      id: createdTwitt.id,
+      authorId: createdTwitt.authorId,
+    };
   }
 }

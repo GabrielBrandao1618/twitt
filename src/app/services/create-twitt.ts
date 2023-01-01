@@ -1,5 +1,6 @@
 import { Twitt } from '@app/entities/twitt';
 import { TwittsRepository } from '@app/repositories/twitts-repository';
+import { Injectable } from '@nestjs/common';
 
 interface Request {
   content: string;
@@ -9,6 +10,7 @@ interface Response {
   createdTwitt: Twitt;
 }
 
+@Injectable()
 export class CreateTwitt {
   constructor(private readonly twittsRepository: TwittsRepository) {}
   async do({ actorId, content }: Request): Promise<Response> {

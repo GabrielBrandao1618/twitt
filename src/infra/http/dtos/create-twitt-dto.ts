@@ -1,3 +1,9 @@
 export class CreateTwittDTO {
-  content: string;
+  body: {
+    content: string;
+  };
+  user: {
+    user: string;
+    id: string;
+  };
 }
