@@ -12,7 +12,7 @@ import { DatabaseModule } from '@infra/database/database.module';
   providers: [
     {
       provide: JwtService,
-      useClass: NestJwtService,
+      useValue: new NestJwtService({ secret: process.env.JWT_SECRET }),
     },
     SignIn,
   ],

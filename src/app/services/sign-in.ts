@@ -2,6 +2,7 @@ import { compare } from 'bcrypt';
 
 import { JwtService } from '@app/providers/jwt-service';
 import { UsersRepository } from '@app/repositories/users-repository';
+import { Injectable } from '@nestjs/common';
 
 interface Request {
   user: string;
@@ -11,6 +12,7 @@ interface Response {
   access_token: string;
 }
 
+@Injectable()
 export class SignIn {
   constructor(
     private readonly jwtService: JwtService,
