@@ -2,19 +2,47 @@ import { InMemoryUsersRepository } from '@test/repositories/in-memory-users-repo
 import { JwtMockService } from '@test/providers/jwt-mock-provider';
 import { SignIn } from './sign-in';
 import { User } from '@app/entities/user';
+import { CreateAccount } from './create-account';
 
 describe('Sign-in', () => {
   let usersRepository: InMemoryUsersRepository;
   let signIn: SignIn;
+  let mockUser: User;
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository();
+    const createAccount = new CreateAccount(usersRepository);
     signIn = new SignIn(new JwtMockService(), usersRepository);
 
-    usersRepository.users = [
-      new User({
-        bio: 'Some bio',
-      }),
-    ];
+    let { account } = await createAccount.do({
+      bio: 'Some bio',
+      name: 'John Doe',
+      password: 'password123',
+      user: 'johndoe',
+    });
+    mockUser = account;
   });
-  it('Should be able to sign-in given the correct credentials', async () => {});
+  it('Should be able to sign-in given the correct credentials', async () => {
+    await expect(
+      signIn.do({
+        password: 'password123',
+        user: mockUser.user,
+      }),
+    ).resolves.not.toThrow();
+  });
+  it('Should fail to sign-in given the wrong credentials', async () => {
+    await expect(
+      signIn.do({
+        password: 'password124',
+        user: mockUser.user,
+      }),
+    ).rejects.toThrow();
+  });
+  it('Should fail to sign-in given the a non-existent user', async () => {
+    await expect(
+      signIn.do({
+        password: 'password123',
+        user: 'randomuser',
+      }),
+    ).rejects.toThrow();
+  });
 });
