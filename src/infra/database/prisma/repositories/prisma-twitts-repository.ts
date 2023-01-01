@@ -1,10 +1,11 @@
 import { TwittsRepository } from '@app/repositories/twitts-repository';
 import { Twitt } from '@app/entities/twitt';
 import { PrismaTwittMapper } from '@infra/mappers/prisma-twitt-mapper';
-import { PrismaClient } from '@prisma/client';
-
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
+@Injectable()
 export class PrismaTwittsRepository implements TwittsRepository {
-  constructor(private readonly prismaClient: PrismaClient) {}
+  constructor(private readonly prismaClient: PrismaService) {}
 
   async create(twitt: Twitt) {
     await this.prismaClient.twitt.create({

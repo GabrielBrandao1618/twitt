@@ -1,10 +1,12 @@
 import { User } from '@app/entities/user';
 import { UsersRepository } from '@app/repositories/users-repository';
 import { PrismaUserMapper } from '@infra/mappers/prisma-user-mapper';
-import { PrismaClient } from '@prisma/client';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
 
+@Injectable()
 export class PrismaUsersRepository implements UsersRepository {
-  constructor(private readonly prismaClient: PrismaClient) {}
+  constructor(private readonly prismaClient: PrismaService) {}
   async findByUser(user: string): Promise<User | null> {
     const foundUser = await this.prismaClient.user.findUnique({
       where: {

@@ -2,6 +2,7 @@ import { hash } from 'bcrypt';
 
 import { User } from '@app/entities/user';
 import { UsersRepository } from '@app/repositories/users-repository';
+import { Injectable } from '@nestjs/common';
 
 interface Request {
   name: string;
@@ -12,7 +13,7 @@ interface Request {
 interface Response {
   account: User;
 }
-
+@Injectable()
 export class CreateAccount {
   constructor(private readonly usersRepository: UsersRepository) {}
   async do({ bio, name, user, password }: Request): Promise<Response> {
