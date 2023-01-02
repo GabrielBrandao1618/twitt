@@ -1,7 +1,7 @@
 import { Replace } from '@helpers/replace';
 import { Entity } from './entity';
 
-interface IUserProps {
+export interface IUserProps {
   name: string;
   user: string;
   password: string;
