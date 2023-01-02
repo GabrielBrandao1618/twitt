@@ -3,6 +3,7 @@ import { JwtMockService } from '@test/providers/jwt-mock-provider';
 import { SignIn } from './sign-in';
 import { User } from '@app/entities/user';
 import { CreateAccount } from './create-account';
+import { BcryptService } from '@app/providers/bcrypt-service';
 
 describe('Sign-in', () => {
   let usersRepository: InMemoryUsersRepository;
@@ -10,7 +11,8 @@ describe('Sign-in', () => {
   let mockUser: User;
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository();
-    const createAccount = new CreateAccount(usersRepository);
+    const bcryptService = new BcryptService();
+    const createAccount = new CreateAccount(usersRepository, bcryptService);
     signIn = new SignIn(new JwtMockService(), usersRepository);
 
     let { account } = await createAccount.do({

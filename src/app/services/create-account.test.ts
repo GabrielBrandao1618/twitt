@@ -1,3 +1,4 @@
+import { BcryptService } from '@app/providers/bcrypt-service';
 import { InMemoryUsersRepository } from '@test/repositories/in-memory-users-repository';
 import { CreateAccount } from './create-account';
 
@@ -7,7 +8,8 @@ describe('Create account', () => {
 
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository();
-    createAccount = new CreateAccount(usersRepository);
+    const bcryptService = new BcryptService();
+    createAccount = new CreateAccount(usersRepository, bcryptService);
   });
 
   it('Should be able to create an account', async () => {

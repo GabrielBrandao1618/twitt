@@ -1,34 +1,30 @@
 import { User } from '@app/entities/user';
 import { UsersRepository } from '@app/repositories/users-repository';
-import { Injectable } from '@nestjs/common';
 import { BcryptService } from '@app/providers/bcrypt-service';
 
 interface Request {
-  name: string;
-  user: string;
-  bio: string;
+  actorId: string;
   password: string;
 }
 interface Response {
-  account: User;
+  result: User;
 }
-@Injectable()
-export class CreateAccount {
+
+export class ChangeUserPassword {
   constructor(
     private readonly usersRepository: UsersRepository,
     private readonly bcryptService: BcryptService,
   ) {}
-  async do({ bio, name, user, password }: Request): Promise<Response> {
+  async do({ actorId, password }: Request): Promise<Response> {
+    const targetUser = await this.usersRepository.findById(actorId);
+    if (!targetUser) {
+      throw new Error('User not found');
+    }
     const encryptedPassword = await this.bcryptService.hash(password);
-    const createUser = new User({
-      bio,
-      user,
-      name,
-      password: encryptedPassword,
-    });
-    await this.usersRepository.create(createUser);
+    targetUser.password = encryptedPassword;
+    await this.usersRepository.save(targetUser);
     return {
-      account: createUser,
+      result: targetUser,
     };
   }
 }
