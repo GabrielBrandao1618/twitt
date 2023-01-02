@@ -7,7 +7,6 @@ describe('Change user password', () => {
   it('Should be able to change user password', async () => {
     const usersRepository = new InMemoryUsersRepository();
     const encryptService = new BcryptService();
-    console.log(encryptService);
     const changeUserPassword = new ChangeUserPassword(
       usersRepository,
       encryptService,

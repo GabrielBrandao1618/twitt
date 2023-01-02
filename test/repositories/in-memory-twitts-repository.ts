@@ -21,6 +21,6 @@ export class InMemoryTwittsRepository implements TwittsRepository {
   }
   async delete(twittId: string): Promise<void> {
     const targetIndex = this.twitts.findIndex((twitt) => twitt.id === twittId);
-    this.twitts = this.twitts.splice(targetIndex, 1);
+    this.twitts.splice(targetIndex, 1);
   }
 }

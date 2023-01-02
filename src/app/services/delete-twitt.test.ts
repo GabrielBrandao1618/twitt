@@ -18,6 +18,7 @@ describe('Delete twitt', () => {
         twittId: exampleTwitt.id,
       }),
     ).resolves.not.toThrow();
+    expect(twittsRepository.twitts).toHaveLength(0);
   });
   it('Should not be able to delete a twitt since actor is not the author', async () => {
     const exampleTwitt = makeTwitt({ authorId: 'aaaa' });
@@ -28,5 +29,6 @@ describe('Delete twitt', () => {
         twittId: exampleTwitt.id,
       }),
     ).rejects.toThrow();
+    expect(twittsRepository.twitts).toHaveLength(1);
   });
 });
