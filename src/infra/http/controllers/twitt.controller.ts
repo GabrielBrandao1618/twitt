@@ -1,9 +1,19 @@
 import { CreateTwitt } from '@app/services/create-twitt';
 import { EditTwitt } from '@app/services/edit-twitt';
+import { ListTwitts } from '@app/services/list-twitts';
 import { JwtGuard } from '@infra/auth/guards/jwt.guard';
-import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateTwittDTO } from '../dtos/create-twitt-dto';
 import { EditTwittDTO } from '../dtos/edit-twitt-dto';
+import { ListTwittsDTO } from '../dtos/list-twitts-dto';
 import { HttpTwittMapper } from '../http-mappers/http-twitt-mapper';
 
 @Controller({
@@ -13,7 +23,17 @@ export class TwittController {
   constructor(
     private readonly createTwitt: CreateTwitt,
     private readonly editTwitt: EditTwitt,
+    private readonly listTwitts: ListTwitts,
   ) {}
+  @UseGuards(JwtGuard)
+  @Get()
+  async handleListTwitts(@Query() params: ListTwittsDTO) {
+    const { twitts } = await this.listTwitts.do({
+      amount: params.amount,
+      page: params.page,
+    });
+    return twitts.map(HttpTwittMapper.toHttp);
+  }
   @UseGuards(JwtGuard)
   @Post()
   async handleCreateTwitt(@Request() req: CreateTwittDTO) {
