@@ -5,4 +5,5 @@ export abstract class TwittsRepository {
   abstract findById(twittId: string): Promise<Twitt | null>;
   abstract save(twitt: Twitt): Promise<void>;
   abstract findByAuthorId(authorId: string): Promise<Twitt[]>;
+  abstract delete(twittId: string): Promise<void>;
 }

@@ -19,4 +19,8 @@ export class InMemoryTwittsRepository implements TwittsRepository {
   async findByAuthorId(authorId: string): Promise<Twitt[]> {
     return this.twitts.filter((twitt) => twitt.authorId === authorId);
   }
+  async delete(twittId: string): Promise<void> {
+    const targetIndex = this.twitts.findIndex((twitt) => twitt.id === twittId);
+    this.twitts = this.twitts.splice(targetIndex, 1);
+  }
 }
