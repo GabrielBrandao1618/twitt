@@ -1,7 +1,7 @@
 import { Replace } from '@helpers/replace';
 import { Entity } from './entity';
 
-interface ITwittProps {
+export interface ITwittProps {
   content: string;
   authorId: string;
   createdAt: Date;

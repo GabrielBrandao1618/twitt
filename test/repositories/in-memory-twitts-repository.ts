@@ -3,6 +3,9 @@ import { TwittsRepository } from '@app/repositories/twitts-repository';
 
 export class InMemoryTwittsRepository implements TwittsRepository {
   twitts: Twitt[] = [];
+  async findByRange(amount: number, page: number): Promise<Twitt[]> {
+    return this.twitts.slice((page - 1) * amount, page * amount);
+  }
   async create(twitt: Twitt): Promise<void> {
     this.twitts.push(twitt);
   }

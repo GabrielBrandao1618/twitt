@@ -6,6 +6,13 @@ import { PrismaService } from '../prisma.service';
 @Injectable()
 export class PrismaTwittsRepository implements TwittsRepository {
   constructor(private readonly prismaClient: PrismaService) {}
+  async findByRange(amount: number, page: number): Promise<Twitt[]> {
+    const queryResult = await this.prismaClient.twitt.findMany({
+      skip: (page - 1) * amount,
+      take: amount,
+    });
+    return queryResult.map(PrismaTwittMapper.toDomain);
+  }
 
   async create(twitt: Twitt) {
     await this.prismaClient.twitt.create({
