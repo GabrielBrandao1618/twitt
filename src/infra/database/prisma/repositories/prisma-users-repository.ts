@@ -1,6 +1,6 @@
 import { User } from '@app/entities/user';
 import { UsersRepository } from '@app/repositories/users-repository';
-import { PrismaUserMapper } from '@infra/mappers/prisma-user-mapper';
+import { PrismaUserMapper } from '@infra/database/prisma/mappers/prisma-user-mapper';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 

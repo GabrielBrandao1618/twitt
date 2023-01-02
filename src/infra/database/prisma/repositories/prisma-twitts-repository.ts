@@ -1,6 +1,6 @@
 import { TwittsRepository } from '@app/repositories/twitts-repository';
 import { Twitt } from '@app/entities/twitt';
-import { PrismaTwittMapper } from '@infra/mappers/prisma-twitt-mapper';
+import { PrismaTwittMapper } from '@infra/database/prisma/mappers/prisma-twitt-mapper';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 @Injectable()
