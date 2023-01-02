@@ -1,11 +1,13 @@
 import { CreateTwitt } from '@app/services/create-twitt';
 import { EditTwitt } from '@app/services/edit-twitt';
 import { ListTwitts } from '@app/services/list-twitts';
+import { ListTwittsByUser } from '@app/services/list-twitts-by-user';
 import { JwtGuard } from '@infra/auth/guards/jwt.guard';
 import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Query,
   Request,
@@ -24,6 +26,7 @@ export class TwittController {
     private readonly createTwitt: CreateTwitt,
     private readonly editTwitt: EditTwitt,
     private readonly listTwitts: ListTwitts,
+    private readonly listTwittsByUser: ListTwittsByUser,
   ) {}
   @UseGuards(JwtGuard)
   @Get()
@@ -54,5 +57,13 @@ export class TwittController {
       content: req.body.content,
     });
     return HttpTwittMapper.toHttp(result);
+  }
+  @Get(':userId')
+  @UseGuards(JwtGuard)
+  async handleListTwittsByUser(@Param('userId') userId: string) {
+    const { twitts } = await this.listTwittsByUser.do({
+      userId: userId,
+    });
+    return twitts.map(HttpTwittMapper.toHttp);
   }
 }
