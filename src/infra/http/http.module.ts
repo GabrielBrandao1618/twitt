@@ -11,7 +11,8 @@ import { JwtStrategy } from '@infra/auth/passport/jwt/jwt-strategy';
 import { EditTwitt } from '@app/services/edit-twitt';
 import { ListTwitts } from '@app/services/list-twitts';
 import { ListTwittsByUser } from '@app/services/list-twitts-by-user';
-import { BcryptService } from '@app/providers/bcrypt-service';
+import { BcryptService } from '@app/lib/bcrypt-service';
+import { EncryptService } from '@app/providers/encrypt-service';
 
 @Module({
   imports: [DatabaseModule],
@@ -23,7 +24,10 @@ import { BcryptService } from '@app/providers/bcrypt-service';
     EditTwitt,
     ListTwitts,
     ListTwittsByUser,
-    BcryptService,
+    {
+      provide: EncryptService,
+      useClass: BcryptService,
+    },
   ],
 })
 export class HttpModule {}

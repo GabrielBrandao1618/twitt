@@ -1,4 +1,4 @@
-import { BcryptService } from '@app/providers/bcrypt-service';
+import { BcryptService } from '@app/lib/bcrypt-service';
 import { makeUser } from '@test/factories/user-factory';
 import { InMemoryUsersRepository } from '@test/repositories/in-memory-users-repository';
 import { ChangeUserPassword } from './change-user-password';
@@ -6,11 +6,11 @@ import { ChangeUserPassword } from './change-user-password';
 describe('Change user password', () => {
   it('Should be able to change user password', async () => {
     const usersRepository = new InMemoryUsersRepository();
-    const bcryptService = new BcryptService();
-    console.log(bcryptService);
+    const encryptService = new BcryptService();
+    console.log(encryptService);
     const changeUserPassword = new ChangeUserPassword(
       usersRepository,
-      bcryptService,
+      encryptService,
     );
     const exampleUser = makeUser({});
     const initialPassword = exampleUser.password;
@@ -21,7 +21,7 @@ describe('Change user password', () => {
     });
     expect(usersRepository.users[0].password).not.toBe(initialPassword);
     expect(usersRepository.users[0].password).not.toBe('newpasswordhere');
-    const isCorrect = bcryptService.compare(
+    const isCorrect = encryptService.compare(
       'newpasswordhere',
       usersRepository.users[0].password,
     );

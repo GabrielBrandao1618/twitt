@@ -1,7 +1,7 @@
 import { User } from '@app/entities/user';
 import { UsersRepository } from '@app/repositories/users-repository';
 import { Injectable } from '@nestjs/common';
-import { BcryptService } from '@app/providers/bcrypt-service';
+import { EncryptService } from '@app/providers/encrypt-service';
 
 interface Request {
   name: string;
@@ -16,10 +16,10 @@ interface Response {
 export class CreateAccount {
   constructor(
     private readonly usersRepository: UsersRepository,
-    private readonly bcryptService: BcryptService,
+    private readonly encryptService: EncryptService,
   ) {}
   async do({ bio, name, user, password }: Request): Promise<Response> {
-    const encryptedPassword = await this.bcryptService.hash(password);
+    const encryptedPassword = await this.encryptService.hash(password);
     const createUser = new User({
       bio,
       user,

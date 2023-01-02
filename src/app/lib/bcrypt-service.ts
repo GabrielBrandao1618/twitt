@@ -1,8 +1,9 @@
+import { EncryptService } from '@app/providers/encrypt-service';
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class BcryptService {
+export class BcryptService implements EncryptService {
   salt = 12;
 
   async hash(data: string | Buffer) {
