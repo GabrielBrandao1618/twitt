@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { ChangeUserNameDTO } from '../dtos/change-user-name-dto';
 import { CreateAccountDTO } from '../dtos/create-account-dto';
+import { DeleteUserDTO } from '../dtos/delete-user-dto';
 import { HttpUserMapper } from '../http-mappers/http-user-mapper';
 
 @Controller({
@@ -48,5 +49,9 @@ export class UserController {
   }
   @UseGuards(JwtGuard)
   @Delete()
-  async handleDeleteUser() {}
+  async handleDeleteUser(@Request() req: DeleteUserDTO) {
+    await this.deleteUser.do({
+      actorId: req.user.id,
+    });
+  }
 }
