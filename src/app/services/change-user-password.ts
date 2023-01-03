@@ -1,6 +1,7 @@
 import { User } from '@app/entities/user';
 import { UsersRepository } from '@app/repositories/users-repository';
 import { EncryptService } from '@app/providers/encrypt-service';
+import { Injectable } from '@nestjs/common';
 
 interface Request {
   actorId: string;
@@ -10,6 +11,7 @@ interface Response {
   result: User;
 }
 
+@Injectable()
 export class ChangeUserPassword {
   constructor(
     private readonly usersRepository: UsersRepository,

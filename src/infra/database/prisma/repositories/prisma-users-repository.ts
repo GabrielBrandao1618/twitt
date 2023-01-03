@@ -7,6 +7,13 @@ import { PrismaService } from '../prisma.service';
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
   constructor(private readonly prismaClient: PrismaService) {}
+  async delete(userId: string) {
+    await this.prismaClient.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+  }
   async findByUser(user: string): Promise<User | null> {
     const foundUser = await this.prismaClient.user.findUnique({
       where: {

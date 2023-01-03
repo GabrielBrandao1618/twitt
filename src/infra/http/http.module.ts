@@ -13,6 +13,11 @@ import { ListTwitts } from '@app/services/list-twitts';
 import { ListTwittsByUser } from '@app/services/list-twitts-by-user';
 import { BcryptService } from '@app/lib/bcrypt-service';
 import { EncryptService } from '@app/providers/encrypt-service';
+import { DeleteTwitt } from '@app/services/delete-twitt';
+import { DeleteUser } from '@app/services/delete-user';
+import { ChangeUserBio } from '@app/services/change-user-bio';
+import { ChangeUserName } from '@app/services/change-user-name';
+import { ChangeUserPassword } from '@app/services/change-user-password';
 
 @Module({
   imports: [DatabaseModule],
@@ -24,6 +29,11 @@ import { EncryptService } from '@app/providers/encrypt-service';
     EditTwitt,
     ListTwitts,
     ListTwittsByUser,
+    DeleteTwitt,
+    DeleteUser,
+    ChangeUserBio,
+    ChangeUserName,
+    ChangeUserPassword,
     {
       provide: EncryptService,
       useClass: BcryptService,

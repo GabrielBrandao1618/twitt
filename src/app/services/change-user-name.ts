@@ -1,5 +1,6 @@
 import { User } from '@app/entities/user';
 import { UsersRepository } from '@app/repositories/users-repository';
+import { Injectable } from '@nestjs/common';
 
 interface Request {
   actorId: string;
@@ -9,6 +10,7 @@ interface Response {
   result: User;
 }
 
+@Injectable()
 export class ChangeUserName {
   constructor(private readonly usersRepository: UsersRepository) {}
   async do({ actorId, name }: Request): Promise<Response> {

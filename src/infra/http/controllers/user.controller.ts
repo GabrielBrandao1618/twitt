@@ -1,6 +1,7 @@
 import { CreateAccount } from '@app/services/create-account';
 import { Controller, Post, Body } from '@nestjs/common';
 import { CreateAccountDTO } from '../dtos/create-account-dto';
+import { HttpUserMapper } from '../http-mappers/http-user-mapper';
 
 @Controller({
   path: 'user',
@@ -15,10 +16,6 @@ export class UserController {
       password: req.password,
       user: req.user,
     });
-    return {
-      name: account.name,
-      user: account.user,
-      id: account.id,
-    };
+    return HttpUserMapper.toHttp(account);
   }
 }

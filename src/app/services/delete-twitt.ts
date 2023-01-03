@@ -1,10 +1,12 @@
 import { TwittsRepository } from '@app/repositories/twitts-repository';
+import { Injectable } from '@nestjs/common';
 
 interface Request {
   twittId: string;
   actorId: string;
 }
 
+@Injectable()
 export class DeleteTwitt {
   constructor(private readonly twittsRepository: TwittsRepository) {}
   async do({ actorId, twittId }: Request) {

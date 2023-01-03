@@ -6,6 +6,13 @@ import { PrismaService } from '../prisma.service';
 @Injectable()
 export class PrismaTwittsRepository implements TwittsRepository {
   constructor(private readonly prismaClient: PrismaService) {}
+  async delete(twittId: string) {
+    await this.prismaClient.twitt.delete({
+      where: {
+        id: twittId,
+      },
+    });
+  }
   async findByRange(amount: number, page: number): Promise<Twitt[]> {
     const queryResult = await this.prismaClient.twitt.findMany({
       skip: (page - 1) * amount,
