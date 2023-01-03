@@ -3,7 +3,6 @@ import { ChangeUserName } from '@app/services/change-user-name';
 import { ChangeUserPassword } from '@app/services/change-user-password';
 import { CreateAccount } from '@app/services/create-account';
 import { DeleteUser } from '@app/services/delete-user';
-import { IJwtPayload } from '@app/types/jwt-payload';
 import { JwtGuard } from '@infra/auth/guards/jwt.guard';
 import {
   Controller,
@@ -12,12 +11,13 @@ import {
   UseGuards,
   Request,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { AuthRequestDTO } from '../dtos/auth-request-dto';
 import { ChangeUserBioDTO } from '../dtos/change-user-bio-dto';
 import { ChangeUserNameDTO } from '../dtos/change-user-name-dto';
+import { ChangeUserPasswordDTO } from '../dtos/change-user-password-dto';
 import { CreateAccountDTO } from '../dtos/create-account-dto';
-import { DeleteUserDTO } from '../dtos/delete-user-dto';
 import { HttpUserMapper } from '../http-mappers/http-user-mapper';
 
 @Controller({
@@ -43,16 +43,19 @@ export class UserController {
     return HttpUserMapper.toHttp(account);
   }
   @Post('name')
-  async handleChangeUserName(@Request() req: ChangeUserNameDTO) {
+  async handleChangeUserName(
+    @Request() req: AuthRequestDTO,
+    @Body() body: ChangeUserNameDTO,
+  ) {
     const { result } = await this.changeUserName.do({
       actorId: req.user.id,
-      name: req.body.name,
+      name: body.name,
     });
     return HttpUserMapper.toHttp(result);
   }
   @UseGuards(JwtGuard)
   @Delete()
-  async handleDeleteUser(@Request() req: DeleteUserDTO) {
+  async handleDeleteUser(@Request() req: AuthRequestDTO) {
     await this.deleteUser.do({
       actorId: req.user.id,
     });
@@ -67,6 +70,19 @@ export class UserController {
     const { result } = await this.changeUserBio.do({
       actorId: req.user.id,
       bio: body.bio,
+    });
+    return HttpUserMapper.toHttp(result);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('password')
+  async handleChangeUserPassword(
+    @Req() req: AuthRequestDTO,
+    @Body() body: ChangeUserPasswordDTO,
+  ) {
+    const { result } = await this.changeUserPassword.do({
+      actorId: req.user.id,
+      password: body.password,
     });
     return HttpUserMapper.toHttp(result);
   }
