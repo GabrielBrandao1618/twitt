@@ -44,22 +44,28 @@ export class TwittController {
   }
   @UseGuards(JwtGuard)
   @Post()
-  async handleCreateTwitt(@Request() req: CreateTwittDTO) {
+  async handleCreateTwitt(
+    @Request() req: AuthRequestDTO,
+    @Body() body: CreateTwittDTO,
+  ) {
     const { id: actorId } = req.user;
     const { createdTwitt } = await this.createTwitt.do({
-      content: req.body.content,
+      content: body.content,
       actorId: actorId,
     });
     return HttpTwittMapper.toHttp(createdTwitt);
   }
   @UseGuards(JwtGuard)
   @Post('edit')
-  async handleEditTwitt(@Request() req: EditTwittDTO) {
+  async handleEditTwitt(
+    @Request() req: AuthRequestDTO,
+    @Body() body: EditTwittDTO,
+  ) {
     const { id: actorId } = req.user;
     const { result } = await this.editTwitt.do({
-      twittId: req.body.id,
+      twittId: body.id,
       actorId: actorId,
-      content: req.body.content,
+      content: body.content,
     });
     return HttpTwittMapper.toHttp(result);
   }

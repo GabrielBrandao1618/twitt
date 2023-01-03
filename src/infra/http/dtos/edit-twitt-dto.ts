@@ -1,9 +1,8 @@
-import { IJwtPayload } from '@app/types/jwt-payload';
+import { IsNotEmpty } from 'class-validator';
 
 export class EditTwittDTO {
-  body: {
-    content: string;
-    id: string;
-  };
-  user: IJwtPayload;
+  @IsNotEmpty()
+  content: string;
+  @IsNotEmpty()
+  id: string;
 }
