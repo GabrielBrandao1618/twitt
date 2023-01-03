@@ -1,4 +1,5 @@
 import { CreateTwitt } from '@app/services/create-twitt';
+import { DeleteTwitt } from '@app/services/delete-twitt';
 import { EditTwitt } from '@app/services/edit-twitt';
 import { ListTwitts } from '@app/services/list-twitts';
 import { ListTwittsByUser } from '@app/services/list-twitts-by-user';
@@ -6,6 +7,7 @@ import { JwtGuard } from '@infra/auth/guards/jwt.guard';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -13,7 +15,9 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
+import { AuthRequestDTO } from '../dtos/auth-request-dto';
 import { CreateTwittDTO } from '../dtos/create-twitt-dto';
+import { DeleteTwittDTO } from '../dtos/delete-twitt-dto';
 import { EditTwittDTO } from '../dtos/edit-twitt-dto';
 import { ListTwittsDTO } from '../dtos/list-twitts-dto';
 import { HttpTwittMapper } from '../http-mappers/http-twitt-mapper';
@@ -27,6 +31,7 @@ export class TwittController {
     private readonly editTwitt: EditTwitt,
     private readonly listTwitts: ListTwitts,
     private readonly listTwittsByUser: ListTwittsByUser,
+    private readonly deleteTwitt: DeleteTwitt,
   ) {}
   @UseGuards(JwtGuard)
   @Get()
@@ -65,5 +70,16 @@ export class TwittController {
       userId: userId,
     });
     return twitts.map(HttpTwittMapper.toHttp);
+  }
+  @Delete()
+  @UseGuards(JwtGuard)
+  async handleDeleteTwitt(
+    @Request() req: AuthRequestDTO,
+    @Body() body: DeleteTwittDTO,
+  ) {
+    await this.deleteTwitt.do({
+      actorId: req.user.id,
+      twittId: body.twittId,
+    });
   }
 }
