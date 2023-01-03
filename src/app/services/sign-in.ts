@@ -3,6 +3,7 @@ import { compare } from 'bcrypt';
 import { JwtService } from '@app/providers/jwt-service';
 import { UsersRepository } from '@app/repositories/users-repository';
 import { Injectable } from '@nestjs/common';
+import { IJwtPayload } from '@app/types/jwt-payload';
 
 interface Request {
   user: string;
@@ -30,7 +31,7 @@ export class SignIn {
     const token = this.jwtService.sign({
       user: foundUser.user,
       id: foundUser.id,
-    });
+    } as IJwtPayload);
     return {
       access_token: token,
     };

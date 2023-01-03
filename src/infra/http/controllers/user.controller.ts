@@ -46,4 +46,7 @@ export class UserController {
     });
     return HttpUserMapper.toHttp(result);
   }
+  @UseGuards(JwtGuard)
+  @Delete()
+  async handleDeleteUser() {}
 }

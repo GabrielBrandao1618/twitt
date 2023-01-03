@@ -1,3 +1,4 @@
+import { IJwtPayload } from '@app/types/jwt-payload';
 import { IsNotEmpty } from 'class-validator';
 
 export class ChangeUserNameDTO {
@@ -5,8 +6,5 @@ export class ChangeUserNameDTO {
   body: {
     name: string;
   };
-  user: {
-    user: string;
-    id: string;
-  };
+  user: IJwtPayload;
 }
