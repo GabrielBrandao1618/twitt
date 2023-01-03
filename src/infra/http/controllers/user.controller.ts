@@ -42,6 +42,7 @@ export class UserController {
     });
     return HttpUserMapper.toHttp(account);
   }
+  @UseGuards(JwtGuard)
   @Post('name')
   async handleChangeUserName(
     @Request() req: AuthRequestDTO,
