@@ -3,6 +3,7 @@ import { ChangeUserName } from '@app/services/change-user-name';
 import { ChangeUserPassword } from '@app/services/change-user-password';
 import { CreateAccount } from '@app/services/create-account';
 import { DeleteUser } from '@app/services/delete-user';
+import { IJwtPayload } from '@app/types/jwt-payload';
 import { JwtGuard } from '@infra/auth/guards/jwt.guard';
 import {
   Controller,
@@ -12,6 +13,8 @@ import {
   Request,
   Delete,
 } from '@nestjs/common';
+import { AuthRequestDTO } from '../dtos/auth-request-dto';
+import { ChangeUserBioDTO } from '../dtos/change-user-bio-dto';
 import { ChangeUserNameDTO } from '../dtos/change-user-name-dto';
 import { CreateAccountDTO } from '../dtos/create-account-dto';
 import { DeleteUserDTO } from '../dtos/delete-user-dto';
@@ -53,5 +56,18 @@ export class UserController {
     await this.deleteUser.do({
       actorId: req.user.id,
     });
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('bio')
+  async handleChangeUserBio(
+    @Request() req: AuthRequestDTO,
+    @Body() body: ChangeUserBioDTO,
+  ) {
+    const { result } = await this.changeUserBio.do({
+      actorId: req.user.id,
+      bio: body.bio,
+    });
+    return HttpUserMapper.toHttp(result);
   }
 }
