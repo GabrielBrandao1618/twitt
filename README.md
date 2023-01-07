@@ -46,6 +46,12 @@ yarn install
 Defina as variáveis de ambiente, como mostrado em:
 [Variáveis de ambiente](#variáveis-de-ambiente)
 
+Carregue o schema no banco de dados
+
+```bash
+yarn prisma db push
+```
+
 Inicie o servidor
 
 ```bash
