@@ -31,7 +31,6 @@ export class UserController {
     private readonly changeUserPassword: ChangeUserPassword,
     private readonly changeUserBio: ChangeUserBio,
   ) {}
-  @UseGuards(JwtGuard)
   @Post()
   async createUser(@Body() req: CreateAccountDTO) {
     const { account } = await this.createAccount.do({
