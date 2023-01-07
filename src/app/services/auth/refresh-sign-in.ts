@@ -1,4 +1,4 @@
-import { JwtRefreshService } from '@app/providers/jwt-refresh-service';
+import { JwtService } from '@app/providers/jwt-service';
 import { IJwtPayload } from '@app/types/jwt-payload';
 import { Injectable } from '@nestjs/common';
 
@@ -12,9 +12,9 @@ interface Response {
 
 @Injectable()
 export class RefreshSignIn {
-  constructor(private readonly jwtRefreshService: JwtRefreshService) {}
+  constructor(private readonly jwtService: JwtService) {}
   async do({ payload }: Request): Promise<Response> {
-    const token = this.jwtRefreshService.sign(payload);
+    const token = this.jwtService.sign(payload);
 
     return {
       access_token: token,

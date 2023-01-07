@@ -1,3 +1,4 @@
+import { IJwtPayload } from '@app/types/jwt-payload';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
@@ -9,15 +10,16 @@ export class JwtRefreshStrategy extends PassportStrategy(
 ) {
   constructor() {
     super({
+      ignoreExpiration: false,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: process.env.JWT_SECRET,
-      jsonWebTokenOptions: {
-        maxAge: '7d',
-      },
+      secretOrKey: process.env.JWT_REFRESH_SECRET,
     });
   }
 
-  validate(payload: any) {
-    return payload;
+  validate(payload: IJwtPayload) {
+    return {
+      user: payload.user,
+      id: payload.id,
+    };
   }
 }

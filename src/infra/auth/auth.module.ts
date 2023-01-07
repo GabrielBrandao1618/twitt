@@ -3,8 +3,6 @@ import { JwtService as NestJwtService } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 import { SignInController } from './controllers/sign-in.controller';
 import { SignIn } from '@app/services/auth/sign-in';
-import { UsersRepository } from '@app/repositories/users-repository';
-import { PrismaUsersRepository } from '@infra/database/prisma/repositories/prisma-users-repository';
 import { DatabaseModule } from '@infra/database/database.module';
 import { JwtRefreshService } from '@app/providers/jwt-refresh-service';
 import { RefreshSignIn } from '@app/services/auth/refresh-sign-in';
@@ -17,7 +15,7 @@ import { RefreshSignIn } from '@app/services/auth/refresh-sign-in';
       useValue: new NestJwtService({
         secret: process.env.JWT_SECRET,
         signOptions: {
-          expiresIn: '7d',
+          expiresIn: '1m',
         },
       }),
     },
@@ -26,7 +24,7 @@ import { RefreshSignIn } from '@app/services/auth/refresh-sign-in';
       useValue: new NestJwtService({
         secret: process.env.JWT_REFRESH_SECRET,
         signOptions: {
-          expiresIn: '1m',
+          expiresIn: '7d',
         },
       }),
     },
