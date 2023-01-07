@@ -18,6 +18,7 @@ import { DeleteUser } from '@app/services/delete-user';
 import { ChangeUserBio } from '@app/services/change-user-bio';
 import { ChangeUserName } from '@app/services/change-user-name';
 import { ChangeUserPassword } from '@app/services/change-user-password';
+import { JwtRefreshStrategy } from '@infra/auth/passport/jwt/jwt-refresh-strategy';
 
 @Module({
   imports: [DatabaseModule],
@@ -26,6 +27,7 @@ import { ChangeUserPassword } from '@app/services/change-user-password';
     CreateAccount,
     CreateTwitt,
     JwtStrategy,
+    JwtRefreshStrategy,
     EditTwitt,
     ListTwitts,
     ListTwittsByUser,

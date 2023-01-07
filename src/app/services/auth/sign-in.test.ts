@@ -2,7 +2,7 @@ import { InMemoryUsersRepository } from '@test/repositories/in-memory-users-repo
 import { JwtMockService } from '@test/providers/jwt-mock-provider';
 import { SignIn } from './sign-in';
 import { User } from '@app/entities/user';
-import { CreateAccount } from './create-account';
+import { CreateAccount } from '../create-account';
 import { BcryptService } from '@app/lib/bcrypt-service';
 
 describe('Sign-in', () => {

@@ -1,22 +1,22 @@
 import { compare } from 'bcrypt';
 
-import { JwtService } from '@app/providers/jwt-service';
 import { UsersRepository } from '@app/repositories/users-repository';
 import { Injectable } from '@nestjs/common';
 import { IJwtPayload } from '@app/types/jwt-payload';
+import { JwtRefreshService } from '@app/providers/jwt-refresh-service';
 
 interface Request {
   user: string;
   password: string;
 }
 interface Response {
-  access_token: string;
+  refresh_token: string;
 }
 
 @Injectable()
 export class SignIn {
   constructor(
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtRefreshService,
     private readonly usersRepository: UsersRepository,
   ) {}
   async do({ password, user }: Request): Promise<Response> {
@@ -33,7 +33,7 @@ export class SignIn {
       id: foundUser.id,
     } as IJwtPayload);
     return {
-      access_token: token,
+      refresh_token: token,
     };
   }
 }
