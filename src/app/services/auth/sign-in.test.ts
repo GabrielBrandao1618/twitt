@@ -16,7 +16,6 @@ describe('Sign-in', () => {
     signIn = new SignIn(new JwtMockService(), usersRepository);
 
     let { account } = await createAccount.do({
-      bio: 'Some bio',
       name: 'John Doe',
       password: 'password123',
       user: 'johndoe',

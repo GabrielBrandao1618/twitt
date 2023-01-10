@@ -15,7 +15,6 @@ describe('Create account', () => {
   it('Should be able to create an account', async () => {
     await expect(
       createAccount.do({
-        bio: 'Some bio',
         name: 'John Doe',
         user: 'johndoe',
         password: 'password123',
@@ -26,7 +25,6 @@ describe('Create account', () => {
   it('Should fail since password is way too long', async () => {
     await expect(
       createAccount.do({
-        bio: 'Some bio',
         name: 'John Doe',
         user: 'johndoe',
         password: 'a'.repeat(129),
@@ -36,7 +34,6 @@ describe('Create account', () => {
   it('Should fail since password has less than 8 characters', async () => {
     await expect(
       createAccount.do({
-        bio: 'Some bio',
         name: 'John Doe',
         user: 'johndoe',
         password: '1234567',
@@ -46,10 +43,23 @@ describe('Create account', () => {
   it('Should fail since password has spaces', async () => {
     await expect(
       createAccount.do({
-        bio: 'Some bio',
         name: 'John Doe',
         user: 'johndoe',
         password: 'password yes',
+      }),
+    ).rejects.toThrow();
+  });
+  it('Should fail since user is already in use', async () => {
+    await createAccount.do({
+      name: 'John Doe',
+      user: 'johndoe',
+      password: 'password123',
+    });
+    await expect(
+      createAccount.do({
+        name: 'John Doe clone',
+        password: 'password123',
+        user: 'johndoe',
       }),
     ).rejects.toThrow();
   });

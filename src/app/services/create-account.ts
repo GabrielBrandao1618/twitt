@@ -27,6 +27,10 @@ export class CreateAccount {
     if (password.includes(' ')) {
       throw new Error('Password should not contain spaces');
     }
+    const alreadyInUseUser = await this.usersRepository.findByUser(user);
+    if (!!alreadyInUseUser) {
+      throw new Error('User is already in use');
+    }
     const encryptedPassword = await this.encryptService.hash(password);
     const createUser = new User({
       bio: '',
