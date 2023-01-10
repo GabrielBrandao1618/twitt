@@ -6,7 +6,6 @@ import { EncryptService } from '@app/providers/encrypt-service';
 interface Request {
   name: string;
   user: string;
-  bio: string;
   password: string;
 }
 interface Response {
@@ -18,7 +17,7 @@ export class CreateAccount {
     private readonly usersRepository: UsersRepository,
     private readonly encryptService: EncryptService,
   ) {}
-  async do({ bio, name, user, password }: Request): Promise<Response> {
+  async do({ name, user, password }: Request): Promise<Response> {
     if (password.length > 128) {
       throw new Error('Password should not be greater than 128 characters');
     }
@@ -30,7 +29,7 @@ export class CreateAccount {
     }
     const encryptedPassword = await this.encryptService.hash(password);
     const createUser = new User({
-      bio,
+      bio: '',
       user,
       name,
       password: encryptedPassword,

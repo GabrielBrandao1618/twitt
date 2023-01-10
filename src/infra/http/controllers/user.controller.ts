@@ -34,7 +34,6 @@ export class UserController {
   @Post()
   async createUser(@Body() req: CreateAccountDTO) {
     const { account } = await this.createAccount.do({
-      bio: req.bio,
       name: req.name,
       password: req.password,
       user: req.user,
