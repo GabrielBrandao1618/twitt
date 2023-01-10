@@ -55,4 +55,26 @@ describe('Create user', () => {
         }).name,
     ).toThrow();
   });
+  it('Should require at least 4 characters in user', async () => {
+    expect(
+      () =>
+        new User({
+          bio: 'Some bio',
+          name: 'John Doe',
+          password: 'password123',
+          user: 'aaa',
+        }),
+    ).toThrow();
+  });
+  it('Should require at least 4 characters in name', async () => {
+    expect(
+      () =>
+        new User({
+          name: 'aaa',
+          bio: 'Some bio',
+          password: 'password123',
+          user: 'user123',
+        }),
+    ).toThrow();
+  });
 });

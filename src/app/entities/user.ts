@@ -17,8 +17,14 @@ export class User extends Entity<IUserProps> {
     if (props.name.length > 50) {
       throw new Error('Name should not be greater than 50 characters');
     }
+    if (props.name.length < 4) {
+      throw new Error('Name should have at least 4 characters');
+    }
     if (props.user.length > 20) {
       throw new Error('User should not be greater than 20 characters');
+    }
+    if (props.user.length < 4) {
+      throw new Error('User should have at least 4 characters');
     }
     if (props.user.includes(' ')) {
       throw new Error('User should not contain spaces');
