@@ -23,4 +23,34 @@ describe('Create account', () => {
     ).resolves.not.toThrow();
     expect(usersRepository.users).toHaveLength(1);
   });
+  it('Should fail since password is way too long', async () => {
+    await expect(
+      createAccount.do({
+        bio: 'Some bio',
+        name: 'John Doe',
+        user: 'johndoe',
+        password: 'a'.repeat(129),
+      }),
+    ).rejects.toThrow();
+  });
+  it('Should fail since password has less than 8 characters', async () => {
+    await expect(
+      createAccount.do({
+        bio: 'Some bio',
+        name: 'John Doe',
+        user: 'johndoe',
+        password: '1234567',
+      }),
+    ).rejects.toThrow();
+  });
+  it('Should fail since password has spaces', async () => {
+    await expect(
+      createAccount.do({
+        bio: 'Some bio',
+        name: 'John Doe',
+        user: 'johndoe',
+        password: 'password yes',
+      }),
+    ).rejects.toThrow();
+  });
 });
